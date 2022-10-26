@@ -46,28 +46,27 @@ public class Novum {
 					numbers[0] = Double.parseDouble((message));
 					mode = Mode.RIGHT_HAND_NUMBER;
 
-				} else {
+				} else
 					System.out.println("Invalid first number: " + message);
-				}
+
 
 			} else if (mode == Mode.RIGHT_HAND_NUMBER) {
 				if (isNumberValid(message)) {
 					numbers[1] = Double.parseDouble((message));
 					mode = Mode.OPERATOR;
 
-				} else {
+				} else
 					System.out.println("Invalid second number: " + message);
-				}
+
 
 			} else {
 				if (isOperatorValid(message)) {
 					System.out.println(numbers[0] + " " + message + " " + numbers[1] + " = " + calculateNumbers(numbers[0], numbers[1], message));
 
 					mode = Mode.LEFT_HAND_NUMBER;
-
-				} else {
+				} else
 					System.out.println("Invalid operator: " + message);
-				}
+
 			}
 		}
 
