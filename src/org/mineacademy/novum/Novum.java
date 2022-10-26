@@ -45,19 +45,15 @@ public class Novum {
 				if (isNumberValid(message)) {
 					numbers[0] = Double.parseDouble((message));
 					mode = Mode.RIGHT_HAND_NUMBER;
-
 				} else
 					System.out.println("Invalid first number: " + message);
-
 
 			} else if (mode == Mode.RIGHT_HAND_NUMBER) {
 				if (isNumberValid(message)) {
 					numbers[1] = Double.parseDouble((message));
 					mode = Mode.OPERATOR;
-
 				} else
 					System.out.println("Invalid second number: " + message);
-
 
 			} else {
 				if (isOperatorValid(message)) {
