@@ -4,9 +4,11 @@ import java.util.Scanner;
 
 public class Novum {
 
-	private static final int LEFT_HAND_NUMBER = 0;
-	private static final int RIGHT_HAND_NUMBER = 1;
-	private static final int OPERATOR = 2;
+	private enum Mode {
+		LEFT_HAND_NUMBER,
+		RIGHT_HAND_NUMBER,
+		OPERATOR
+	}
 
 	public static void main(String[] args) {
 		Novum novum = new Novum();
@@ -24,52 +26,49 @@ public class Novum {
 		Scanner scanner = new Scanner(System.in);
 		String message = "";
 
-		int mode = LEFT_HAND_NUMBER; // 0, 1 or 2
+		Mode mode = Mode.LEFT_HAND_NUMBER;
 		double[] numbers = new double[2];
 
 		while (!message.equals("exit")) {
-			if (mode > OPERATOR)
-				mode = 0;
-
-			if (mode == LEFT_HAND_NUMBER)
+			if (mode == Mode.LEFT_HAND_NUMBER)
 				System.out.println("Please type the first number.");
-			else if (mode == RIGHT_HAND_NUMBER)
+
+			else if (mode == Mode.RIGHT_HAND_NUMBER)
 				System.out.println("Please type the second number.");
+
 			else
 				System.out.println("Please type the operator.");
 
 			message = scanner.nextLine();
 
-			if (mode == LEFT_HAND_NUMBER) {
-				if (isNumberValid(message))
+			if (mode == Mode.LEFT_HAND_NUMBER) {
+				if (isNumberValid(message)) {
 					numbers[0] = Double.parseDouble((message));
-				else {
-					System.out.println("Invalid first number: " + message);
+					mode = Mode.RIGHT_HAND_NUMBER;
 
-					continue; // continue the loop
+				} else {
+					System.out.println("Invalid first number: " + message);
 				}
 
-			} else if (mode == RIGHT_HAND_NUMBER) {
-				if (isNumberValid(message))
+			} else if (mode == Mode.RIGHT_HAND_NUMBER) {
+				if (isNumberValid(message)) {
 					numbers[1] = Double.parseDouble((message));
-				else {
-					System.out.println("Invalid second number: " + message);
+					mode = Mode.OPERATOR;
 
-					continue; // continue the loop
+				} else {
+					System.out.println("Invalid second number: " + message);
 				}
 
 			} else {
-				if (isOperatorValid(message))
+				if (isOperatorValid(message)) {
 					System.out.println(numbers[0] + " " + message + " " + numbers[1] + " = " + calculateNumbers(numbers[0], numbers[1], message));
 
-				else {
-					System.out.println("Invalid operator: " + message);
+					mode = Mode.LEFT_HAND_NUMBER;
 
-					continue; // continue the loop
+				} else {
+					System.out.println("Invalid operator: " + message);
 				}
 			}
-
-			mode++; // next mode
 		}
 
 		System.out.println("The program has quit. Byte!");
@@ -93,18 +92,19 @@ public class Novum {
 
 	// calculates two numbers with operator e.g. 2 + 2 = 4
 	private double calculateNumbers(double firstNumber, double secondNumber, String operator) {
-		// (a switch statement would probably look better but we have not learned that yet)
-		if (operator.equals("+"))
-			return firstNumber + secondNumber;
-		else if (operator.equals("-"))
-			return firstNumber - secondNumber;
-		else if (operator.equals("/"))
-			return firstNumber / secondNumber;
-		else if (operator.equals("*"))
-			return firstNumber * secondNumber;
-		else if (operator.equals("%"))
-			return firstNumber % secondNumber;
-		else
-			return 0;
+		switch (operator) {
+			case "+":
+				return firstNumber + secondNumber;
+			case "-":
+				return firstNumber - secondNumber;
+			case "/":
+				return firstNumber / secondNumber;
+			case "*":
+				return firstNumber * secondNumber;
+			case "%":
+				return firstNumber % secondNumber;
+			default:
+				return 0;
+		}
 	}
 }
