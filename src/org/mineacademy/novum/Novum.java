@@ -1,8 +1,6 @@
 package org.mineacademy.novum;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Novum {
 
@@ -24,6 +22,25 @@ public class Novum {
 			int number = iterator.next();
 
 			System.out.println(number);
+		}
+
+		Map<String, Integer> map = new HashMap<>();
+
+		map.put("hello", 500);
+		map.put("hello2", 200);
+		map.put("hello3", 5000);
+
+		System.out.println("Map: " + map);
+
+		recursive(5);
+	}
+
+	public static void recursive(int number) {
+		if (number > 0) {
+			System.out.println(number);
+
+			number--;
+			recursive(number);
 		}
 	}
 }
